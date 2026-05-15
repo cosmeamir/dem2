@@ -884,9 +884,47 @@
     });
   });
 
- 
+  const menu = document.querySelector('.navbar');
+  const menuLinks = document.querySelectorAll('.navbar a[href^="#"]');
 
+  if (menu) {
+    const syncMenuState = () => {
+      menu.classList.toggle('navbar--scrolled', window.scrollY > 32);
+
+      let activeLink = null;
+      menuLinks.forEach(link => {
+        const section = document.querySelector(link.getAttribute('href'));
+        if (!section) return;
+
+        const top = section.offsetTop - menu.offsetHeight - 20;
+        const bottom = top + section.offsetHeight;
+        if (window.scrollY >= top && window.scrollY < bottom) {
+          activeLink = link;
+        }
+      });
+
+      if (activeLink) {
+        menuLinks.forEach(link => link.parentElement.classList.remove('active'));
+        activeLink.parentElement.classList.add('active');
+      }
+    };
+
+    menuLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+
+        event.preventDefault();
+        const offsetTop = target.getBoundingClientRect().top + window.scrollY - menu.offsetHeight + 1;
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', syncMenuState, { passive: true });
+    window.addEventListener('resize', syncMenuState);
+    syncMenuState();
+  }
 
   
   
-
+  
