@@ -884,9 +884,69 @@
     });
   });
 
- 
+  const menu = document.querySelector('.navbar');
+  const menuLinks = document.querySelectorAll('.navbar a[href^="#"]');
+  const menuToggle = document.querySelector('.navbar-toggle');
 
+  if (menu) {
+    const syncMenuState = () => {
+      menu.classList.toggle('navbar--scrolled', window.scrollY > 32);
+
+      let activeLink = null;
+      menuLinks.forEach(link => {
+        const section = document.querySelector(link.getAttribute('href'));
+        if (!section) return;
+
+        const top = section.offsetTop - menu.offsetHeight - 20;
+        const bottom = top + section.offsetHeight;
+        if (window.scrollY >= top && window.scrollY < bottom) {
+          activeLink = link;
+        }
+      });
+
+      if (activeLink) {
+        menuLinks.forEach(link => link.parentElement.classList.remove('active'));
+        activeLink.parentElement.classList.add('active');
+      }
+    };
+
+    menuLinks.forEach(link => {
+      link.addEventListener('click', event => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+
+        event.preventDefault();
+        const offsetTop = target.getBoundingClientRect().top + window.scrollY - menu.offsetHeight + 1;
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+        menu.classList.remove('navbar--open');
+        if (menuToggle) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('navbar--open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    document.addEventListener('click', event => {
+      if (!menu.classList.contains('navbar--open')) return;
+      if (!menu.contains(event.target)) {
+        menu.classList.remove('navbar--open');
+        if (menuToggle) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
+    });
+
+    window.addEventListener('scroll', syncMenuState, { passive: true });
+    window.addEventListener('resize', syncMenuState);
+    syncMenuState();
+  }
 
   
   
-
+  
