@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projecto Residencial- Condomínio Kuditemo V6</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .slider {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.8s ease-in-out;
+      height: 100%;
+      width: 100%;
+    }
+
+    .slide {
+      min-width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide img {
+      width: auto;
+      height: 90vh;
+      max-width: 90vw;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+      background-color: #111;
+      border: 10px solid #000;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 32px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 50%;
+      padding: 12px;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+
+    .arrow:hover {
+      background: rgba(192, 139, 92, 0.6);
+    }
+
+    .left {
+      left: 20px;
+    }
+
+    .right {
+      right: 20px;
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 20px;
+      left: 40px;
+      color: white;
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="slider">
+
+  <div class="arrow left" onclick="changeSlide(-1)">&#10094;</div>
+  <div class="arrow right" onclick="changeSlide(1)">&#10095;</div>
+  <div class="slides" id="slideContainer">
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/1.webp" alt="1"></div>
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/2.webp" alt="2"></div>
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/3.webp" alt="3"></div>
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/4.webp" alt="4"></div>
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/5.webp" alt="5"></div>
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/6.webp" alt="6"></div>
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/7.webp" alt="7"></div>
+    <div class="slide"><img src="images/projectos/Projecto Residencial- Condomínio Kuditemo V6/8.webp" alt="8"></div>
+
+    
+   
+    
+     </div>
+</div>
+
+<script>
+  let currentIndex = 0;
+  const slides = document.getElementById('slideContainer');
+  const totalSlides = slides.children.length;
+
+  function changeSlide(direction) {
+    currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+    updateSlidePosition();
+  }
+
+  function updateSlidePosition() {
+    slides.style.transform = `translateX(-${currentIndex * 100}vw)`;
+  }
+</script>
+
+</body>
+</html>
