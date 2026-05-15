@@ -8286,11 +8286,19 @@ html:not(.ie-11):not(.ios) .parallax-disabled {
   .navbar {
     background: transparent;
     padding: 20px 40px;
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
-    z-index: 10;
+    left: 0;
+    z-index: 1000;
 	display: block;
+    transition: background-color .3s ease, box-shadow .3s ease, padding .3s ease;
+  }
+
+  .navbar.navbar--scrolled {
+    background-color: rgba(0, 0, 0, 0.88);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 14px 40px;
   }
   
   .navbar ul {
@@ -8304,6 +8312,12 @@ html:not(.ie-11):not(.ios) .parallax-disabled {
     color: #fff;
     text-decoration: none;
     font-size: 14px;
+    letter-spacing: .08em;
+    transition: opacity .2s ease;
+  }
+
+  .navbar li a:hover {
+    opacity: .8;
   }
   
   .navbar .active a {
