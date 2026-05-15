@@ -886,6 +886,7 @@
 
   const menu = document.querySelector('.navbar');
   const menuLinks = document.querySelectorAll('.navbar a[href^="#"]');
+  const menuToggle = document.querySelector('.navbar-toggle');
 
   if (menu) {
     const syncMenuState = () => {
@@ -917,7 +918,28 @@
         event.preventDefault();
         const offsetTop = target.getBoundingClientRect().top + window.scrollY - menu.offsetHeight + 1;
         window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+        menu.classList.remove('navbar--open');
+        if (menuToggle) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
       });
+    });
+
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('navbar--open');
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    document.addEventListener('click', event => {
+      if (!menu.classList.contains('navbar--open')) return;
+      if (!menu.contains(event.target)) {
+        menu.classList.remove('navbar--open');
+        if (menuToggle) {
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      }
     });
 
     window.addEventListener('scroll', syncMenuState, { passive: true });
